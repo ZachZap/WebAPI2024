@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games Page</title>
+</head>
+<body>
+    <div id = "container">
+        <h1>GameList</h1>
+        <script>
+            fetch("/getdata").then(function(games){
+                games.json().then(function(theGames){
+                    console.log(theGames);
+                    for(let game of theGames.games)
+                    {
+                        var gameElement = document.createElement("p");
+                        gameElement.innerHTML = game.gamename;
+                        gameElement.innerHTML += " by " + game.gamestudio + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
+                        document.getElementById("container").appendChild(gameElement);
+
+                        var deleteButton = document.createElement("button");
+                        deleteButton.innerText = "Delete Game";
+                        deleteButton.addEventListener("click", function(){
+                            console.log("Deleted game" );
+                            //insert call to new route to delete the game 
+                            location.reload();
+                            fetch("/deletegame", {
+                                method:"POST",
+                                headers:{
+                                    "Content-Type":"application/json"
+                                },
+                                body:JSON.stringify({game:game})
+                            })
+                        })
+
+                        gameElement.appendChild(deleteButton);
+
+                        var updateButton = document.createElement("button");
+                        updateButton.innerText = "Update Game";
+                        updateButton.addEventListener("click", function(){
+                            window.location.replace("/update.html?id=" + game._id + "&name=" + game.gamename);
+                        })
+
+                        gameElement.appendChild(updateButton);
+                    }
+                })
+            })
+        </script>
+    </div>
+</body>
+</html>
