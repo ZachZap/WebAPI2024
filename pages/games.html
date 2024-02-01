@@ -44,8 +44,20 @@
                         })
 
                         gameElement.appendChild(updateButton);
+                        
                     }
+                    var gameElement = document.createElement("p");
+                        gameElement.innerHTML = "";
+                        document.getElementById("container").appendChild(gameElement);
+                    var createButton = document.createElement("button");
+                        createButton.innerText = "Create Game";
+                        createButton.addEventListener("click", function(){
+                            window.location.replace("/create.html");
+                        })
+                        gameElement.appendChild(createButton);
+                        
                 })
+                
             })
         </script>
     </div>
