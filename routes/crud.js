@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 var mongoose = require("mongoose");
+
+var dataToSend;
 require("../models/GameData")
 var gameModel = mongoose.model("games");
 router.get("/getdata",function(req,res){
@@ -34,6 +36,19 @@ router.post("/saveGame", function(req, res)
         res.redirect("games.html");
     })
 })
+
+router.post("/unity", function(req, res)
+{
+    console.log("Unity Posted Data: ");
+    console.log(req.body);
+    dataToSend = req.body;
+});
+
+router.get("/getUnity", function(req, res)
+{
+    console.log(dataToSend);
+    res.json(dataToSend);
+});
 
 module.exports = router;
 
